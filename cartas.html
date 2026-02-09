@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MI CACHETONA HERMOSA 💖</title>
+
+  <style>
+    :root{
+      --bg1:#ffe6ef;
+      --bg2:#fce4ec;
+      --card:#fff7fb;
+      --pink:#f48fb1;
+      --pink2:#ec407a;
+      --text:#3b2b33;
+      --shadow: 0 18px 40px rgba(236,64,122,.18);
+      --shadow2: 0 10px 25px rgba(0,0,0,.10);
+      --radius: 22px;
+    }
+
+    *{ box-sizing:border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at 20% 10%, #fff 0%, rgba(255,255,255,0) 55%),
+        radial-gradient(900px 500px at 80% 20%, #fff 0%, rgba(255,255,255,0) 55%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    /* “App shell” */
+    .app {
+      width: min(520px, 94vw);
+      border-radius: 28px;
+      background: rgba(255,255,255,.55);
+      border: 1px solid rgba(255,255,255,.7);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .app-header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 16px 18px;
+      background: rgba(255,255,255,.65);
+      border-bottom: 1px solid rgba(236,64,122,.15);
+    }
+    .brand{
+      display:flex; gap:10px; align-items:center;
+      font-weight: 800;
+      letter-spacing: .2px;
+      color: #b3124f;
+      user-select:none;
+    }
+    .brand .dot{
+      width: 12px; height:12px; border-radius: 50%;
+      background: var(--pink2);
+      box-shadow: 0 0 0 6px rgba(236,64,122,.18);
+    }
+    .chip{
+      font-size: 12px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(236,64,122,.10);
+      border: 1px solid rgba(236,64,122,.15);
+      color:#a10f44;
+      user-select:none;
+    }
+
+    /* Screens */
+    .screen {
+      display: none;
+      padding: 22px 18px 20px;
+    }
+    .active { display: block; }
+
+    /* Title */
+    .title{
+      text-align:center;
+      margin: 8px 0 10px;
+      line-height:1.1;
+    }
+    .title h1{
+      margin:0;
+      font-size: 26px;
+      font-weight: 900;
+      color:#b3124f;
+    }
+    .title p{
+      margin:8px 0 0;
+      font-size: 14px;
+      opacity:.85;
+    }
+
+    /* Password card */
+    .card{
+      margin: 16px auto 0;
+      width: min(420px, 100%);
+      background: rgba(255,255,255,.78);
+      border: 1px solid rgba(236,64,122,.15);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow2);
+      padding: 18px;
+    }
+
+    .lockline{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap: 8px;
+      font-weight: 700;
+      color:#8a2a4a;
+      margin: 2px 0 10px;
+    }
+
+    .input-display {
+      font-size: 28px;
+      letter-spacing: 10px;
+      text-align: center;
+      margin: 10px 0 14px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(236,64,122,.08);
+      border: 1px solid rgba(236,64,122,.15);
+      user-select:none;
+    }
+
+    .keypad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .key {
+      background: linear-gradient(180deg, rgba(244,143,177,.85), rgba(236,64,122,.70));
+      border: none;
+      border-radius: 16px;
+      font-size: 20px;
+      padding: 16px 0;
+      cursor: pointer;
+      color: #fff;
+      font-weight: 800;
+      box-shadow: 0 10px 18px rgba(236,64,122,.22);
+      transition: transform .08s ease, filter .2s ease;
+    }
+    .key:hover{ filter: brightness(1.03); }
+    .key:active{ transform: scale(.97); }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      margin-top: 12px;
+      justify-content:center;
+    }
+    .btn{
+      border: 1px solid rgba(236,64,122,.22);
+      background: rgba(255,255,255,.75);
+      color:#a10f44;
+      font-weight: 800;
+      padding: 10px 12px;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: transform .08s ease, background .2s ease;
+      user-select:none;
+    }
+    .btn:active{ transform: scale(.98); }
+    .btn:hover{ background: rgba(255,255,255,.90); }
+
+    /* Notepad / letter */
+    .letter-wrap{
+      display:grid;
+      place-items:center;
+      padding: 6px 0 14px;
+    }
+    .notepad {
+      background: linear-gradient(180deg, rgba(255,240,246,.95), rgba(255,247,251,.95));
+      border: 1px solid rgba(236,64,122,.18);
+      padding: 22px;
+      border-radius: 24px;
+      width: 100%;
+      max-width: 480px;
+      text-align: left;
+      line-height: 1.7;
+      box-shadow: var(--shadow2);
+      position: relative;
+      overflow:hidden;
+    }
+    .notepad:before{
+      content:"";
+      position:absolute; inset:-80px -80px auto auto;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle at 30% 30%, rgba(236,64,122,.25), rgba(236,64,122,0) 60%);
+      transform: rotate(15deg);
+    }
+    .notepad h3 {
+      margin: 0 0 6px;
+      font-size: 14px;
+      opacity: .85;
+    }
+    .notepad h4{
+      margin:0 0 10px;
+      font-size: 18px;
+      color:#b3124f;
+    }
+    .signature{
+      margin-top: 12px;
+      font-weight: 900;
+      color:#8a2a4a;
+    }
+
+    /* Unlock heart animation overlay */
+    .overlay{
+      position: fixed;
+      inset: 0;
+      display: none;
+      place-items: center;
+      background: rgba(255, 230, 239, .65);
+      backdrop-filter: blur(6px);
+      z-index: 10;
+    }
+    .overlay.show{ display:grid; }
+
+    .heart-box{
+      text-align:center;
+      padding: 26px 22px;
+      border-radius: 26px;
+      background: rgba(255,255,255,.8);
+      border: 1px solid rgba(236,64,122,.18);
+      box-shadow: var(--shadow);
+      width: min(420px, 92vw);
+    }
+
+    .heart{
+      width: 120px;
+      height: 120px;
+      margin: 8px auto 12px;
+      position: relative;
+      transform: rotate(-45deg);
+      background: var(--pink2);
+      animation: beat 1s infinite;
+      box-shadow: 0 18px 40px rgba(236,64,122,.28);
+    }
+    .heart:before,
+    .heart:after{
+      content:"";
+      position:absolute;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: var(--pink2);
+    }
+    .heart:before{ top:-60px; left:0; }
+    .heart:after{ left:60px; top:0; }
+
+    @keyframes beat{
+      0%, 100% { transform: rotate(-45deg) scale(1); }
+      25% { transform: rotate(-45deg) scale(1.08); }
+      50% { transform: rotate(-45deg) scale(1); }
+      75% { transform: rotate(-45deg) scale(1.12); }
+    }
+
+    .overlay h2{
+      margin: 0;
+      color:#b3124f;
+      font-weight: 950;
+      letter-spacing: .2px;
+    }
+    .overlay p{
+      margin: 10px 0 0;
+      opacity:.9;
+      font-weight: 600;
+    }
+
+    /* Small note for music */
+    .music-note{
+      font-size: 12px;
+      opacity: .8;
+      text-align:center;
+      margin-top: 10px;
+    }
+
+    /* Smooth screen transition */
+    .fade-in{
+      animation: fade .35s ease both;
+    }
+    @keyframes fade{
+      from{ opacity:0; transform: translateY(6px); }
+      to{ opacity:1; transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <div class="app-header">
+      <div class="brand">
+        <span class="dot"></span>
+        <span>MI CACHETONA HERMOSA</span>
+      </div>
+      <div class="chip">🔐 Carta secreta</div>
+    </div>
+
+    <!-- PASSWORD SCREEN -->
+    <div id="passwordScreen" class="screen active fade-in">
+      <div class="title">
+        <h1>MI CACHETONA HERMOSA 💖</h1>
+        <p>Solo tú puedes desbloquear esto 😌</p>
+      </div>
+
+      <div class="card">
+        <div class="lockline">🔒 Ingresa la contraseña</div>
+        <div class="input-display" id="inputDisplay">••••</div>
+
+        <div class="keypad">
+          <button class="key" onclick="enterDigit('1')">1</button>
+          <button class="key" onclick="enterDigit('2')">2</button>
+          <button class="key" onclick="enterDigit('3')">3</button>
+          <button class="key" onclick="enterDigit('4')">4</button>
+          <button class="key" onclick="enterDigit('5')">5</button>
+          <button class="key" onclick="enterDigit('6')">6</button>
+          <button class="key" onclick="enterDigit('7')">7</button>
+          <button class="key" onclick="enterDigit('8')">8</button>
+          <button class="key" onclick="enterDigit('9')">9</button>
+          <button class="key" onclick="enterDigit('0')">0</button>
+          <button class="btn" onclick="backspace()">⌫ Borrar</button>
+          <button class="btn" onclick="resetInput()">↺ Reset</button>
+        </div>
+
+        <div class="music-note">🎵 Tip: cuando se desbloquee, se prende la música (si el navegador lo permite)</div>
+      </div>
+    </div>
+
+    <!-- LETTER SCREEN -->
+    <div id="notepadScreen" class="screen fade-in">
+      <div class="letter-wrap">
+        <div class="notepad">
+          <h3>📅 24 Junio 2025</h3>
+          <h4>💌 Mi Querida Cachetona</h4>
+
+          <p>
+            Quiero que sepas lo feliz que soy por tenerte en mi vida. Desde que llegaste, todo cambió para mejor.
+            Me haces sentir amado, cuidado y acompañado de una forma que nunca antes había sentido.
+          </p>
+          <p>
+            A tu lado aprendí lo que es el amor verdadero, ese que se demuestra con acciones, con palabras sinceras
+            y con esos pequeños detalles que hacen la diferencia. Gracias por estar siempre conmigo, por darme tu
+            tiempo, tu cariño y tu comprensión.
+          </p>
+          <p>
+            No sé cómo explicarlo, pero contigo mi corazón está en paz. Eres mi alegría diaria
+            y la razón de tantas sonrisas.
+          </p>
+          <p>
+            Te amo profundamente. ♡
+          </p>
+
+          <div class="signature">— Mateo</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEART OVERLAY (shows on correct password) -->
+  <div id="unlockOverlay" class="overlay">
+    <div class="heart-box">
+      <div class="heart" aria-hidden="true"></div>
+      <h2>¡Desbloqueado! 💖</h2>
+      <p>Para ti, con todo mi amor 😘</p>
+    </div>
+  </div>
+
+  <!-- ✅ Música (pon aquí tu archivo) -->
+  <!-- 1) Crea una carpeta llamada "assets" -->
+  <!-- 2) Mete un mp3: assets/musica.mp3 -->
+  <audio id="bgMusic" src="assets/musica.mp3" preload="auto" loop></audio>
+
+  <script>
+    // ✅ Cambia la contraseña si quieres
+    const correctPassword = '0110';
+
+    let input = '';
+
+    const display = document.getElementById('inputDisplay');
+    const passwordScreen = document.getElementById('passwordScreen');
+    const notepadScreen = document.getElementById('notepadScreen');
+    const overlay = document.getElementById('unlockOverlay');
+    const music = document.getElementById('bgMusic');
+
+    function updateDisplay() {
+      display.textContent = input.padEnd(4, '•');
+    }
+
+    function enterDigit(digit) {
+      // al primer toque intentamos arrancar música (ayuda con las reglas del navegador)
+      tryPlayMusic();
+
+      if (input.length < 4) {
+        input += digit;
+        updateDisplay();
+      }
+
+      if (input.length === 4) {
+        if (input === correctPassword) {
+          unlockSequence();
+        } else {
+          alert('Contraseña incorrecta, intenta de nuevo');
+          resetInput();
+        }
+      }
+    }
+
+    function backspace() {
+      tryPlayMusic();
+      input = input.slice(0, -1);
+      updateDisplay();
+    }
+
+    function resetInput() {
+      input = '';
+      updateDisplay();
+    }
+
+    function unlockSequence() {
+      // 1) Mostrar overlay con corazón animado
+      overlay.classList.add('show');
+
+      // 2) Intentar música
+      tryPlayMusic(true);
+
+      // 3) Después de un momento, pasar a la carta
+      setTimeout(() => {
+        overlay.classList.remove('show');
+        passwordScreen.classList.remove('active');
+        notepadScreen.classList.add('active');
+      }, 1500);
+    }
+
+    function tryPlayMusic(force=false){
+      // Algunos navegadores bloquean autoplay.
+      // Esto lo intenta iniciar con la interacción del usuario.
+      if (!music) return;
+
+      // Si ya está sonando, no hacemos nada
+      if (!music.paused) return;
+
+      // Si force o ya hubo interacción, intentamos
+      music.volume = 0.55;
+
+      music.play().catch(() => {
+        // Si falla, no molestamos con alert.
+        // El usuario puede permitir sonido o tocar cualquier tecla otra vez.
+      });
+    }
+
+    // (Opcional) permitir teclear números en teclado físico
+    document.addEventListener('keydown', (e) => {
+      if (!passwordScreen.classList.contains('active')) return;
+
+      const k = e.key;
+      if (k >= '0' && k <= '9') enterDigit(k);
+      if (k === 'Backspace') backspace();
+      if (k === 'Escape') resetInput();
+    });
+  </script>
+</body>
+</html>
