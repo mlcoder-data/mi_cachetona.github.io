@@ -380,7 +380,26 @@
   <!-- ✅ Música (pon aquí tu archivo) -->
   <!-- 1) Crea una carpeta llamada "assets" -->
   <!-- 2) Mete un mp3: assets/musica.mp3 -->
-  <audio id="bgMusic" src="assets/musica.mp3" preload="auto" loop></audio>
+  <audio id="bgMusic" src="assets/yellow.mp3" preload="auto" loop></audio>
+
+  <div id="musicControls" style="
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: white;
+  padding: 10px 14px;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  font-weight: bold;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  ">
+    <button onclick="playMusic()">▶️</button>
+    <button onclick="pauseMusic()">⏸️</button>
+    <span id="musicState">Música detenida</span>
+  </div>
+
 
   <script>
     // ✅ Cambia la contraseña si quieres
