@@ -384,24 +384,40 @@
 
   <div id="musicControls" style="
   position: fixed;
-  bottom: 20px;
-  left: 20px;
-  background: white;
-  padding: 10px 14px;
-  border-radius: 14px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  font-weight: bold;
+  bottom: 18px;
+  left: 18px;
   display: flex;
   gap: 10px;
   align-items: center;
+  background: rgba(255,255,255,.85);
+  border: 1px solid rgba(236,64,122,.18);
+  padding: 10px 12px;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0,0,0,.10);
+  backdrop-filter: blur(8px);
+  font-weight: 800;
+  color: #a10f44;
+  z-index: 50;
   ">
-    <button onclick="playMusic()">▶️</button>
-    <button onclick="pauseMusic()">⏸️</button>
-    <span id="musicState">Música detenida</span>
+    <button id="btnPlay" style="cursor:pointer;border:none;border-radius:12px;padding:8px 10px;font-weight:900;">▶️</button>
+    <button id="btnPause" style="cursor:pointer;border:none;border-radius:12px;padding:8px 10px;font-weight:900;">⏸️</button>
+    <span id="musicState">🔇 Bloqueada (toca ▶️)</span>
   </div>
 
 
+
   <script>
+
+  function playMusic() {
+    music.play();
+    musicState.textContent = "🎵 Sonando";
+  }
+
+  function pauseMusic() {
+    music.pause();
+    musicState.textContent = "⏸️ Pausada";
+  }
+
     // ✅ Cambia la contraseña si quieres
     const correctPassword = '0110';
 
@@ -412,7 +428,52 @@
     const notepadScreen = document.getElementById('notepadScreen');
     const overlay = document.getElementById('unlockOverlay');
     const music = document.getElementById('bgMusic');
+    const musicState = document.getElementById("musicState");
+    const btnPlay = document.getElementById("btnPlay");
+    const btnPause = document.getElementById("btnPause");
 
+    function setState(text){
+      if (musicState) musicState.textContent = text;
+    }
+
+    async function playMusic() {
+      try {
+        music.volume = 0.55;
+        await music.play();
+        setState("🎵 Sonando");
+      } catch (e) {
+        // Autoplay bloqueado o archivo no encontrado
+        setState("🔇 Bloqueada (toca ▶️)");
+      }
+    }
+
+    function pauseMusic() {
+      music.pause();
+      setState("⏸️ Pausada");
+    }
+
+    // Botones
+    btnPlay?.addEventListener("click", playMusic);
+    btnPause?.addEventListener("click", pauseMusic);
+
+    // Intento al cargar (puede fallar por bloqueo)
+    window.addEventListener("load", () => {
+      playMusic();
+    });
+
+    // Si el navegador bloquea, al primer click en cualquier parte intenta otra vez
+    document.addEventListener("click", () => {
+      if (music.paused) playMusic();
+    }, { once: true });
+
+    // Para saber si el archivo cargó o falló
+    music.addEventListener("canplaythrough", () => {
+      // no significa que suene, solo que cargó bien
+      if (music.paused) setState("✅ Cargada (toca ▶️)");
+    });
+    music.addEventListener("error", () => {
+      setState("❌ Error: revisa assets/yellow.mp3");
+    });
     function updateDisplay() {
       display.textContent = input.padEnd(4, '•');
     }
